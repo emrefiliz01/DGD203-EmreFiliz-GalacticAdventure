@@ -5,10 +5,12 @@ namespace GalacticAdventure
     public class Game
     {
         private Player player;
+        private Map map;
 
         public Game()
         {
             player = new Player();
+            map = new Map();
         }
 
         public void ShowMenu()
@@ -44,6 +46,7 @@ namespace GalacticAdventure
         {
             Console.Write("Enter your character's name: ");
             player.Name = Console.ReadLine();
+            player.CurrentLocation = "abandoned_space_station";
             Console.WriteLine($"Welcome, {player.Name}! Your adventure begins now.");
             GameLoop();
         }
@@ -58,10 +61,12 @@ namespace GalacticAdventure
         {
             while (true)
             {
-                Console.WriteLine("\nWhat would you like to do?");
+                Console.WriteLine($"\nYou are currently at: {map.GetLocation(player.CurrentLocation).Name}");
+                Console.WriteLine("What would you like to do?");
                 Console.WriteLine("1. Look Around");
                 Console.WriteLine("2. Check Inventory");
-                Console.WriteLine("3. Quit");
+                Console.WriteLine("3. Move to a New Location");
+                Console.WriteLine("4. Quit");
 
                 Console.Write("Choose an action: ");
                 string action = Console.ReadLine();
@@ -75,6 +80,9 @@ namespace GalacticAdventure
                         player.ShowInventory();
                         break;
                     case "3":
+                        MoveToLocation();
+                        break;
+                    case "4":
                         Console.WriteLine("Exiting the game...");
                         return;
                     default:
@@ -86,9 +94,28 @@ namespace GalacticAdventure
 
         private void LookAround()
         {
-            Console.WriteLine($"You are currently at: {player.CurrentLocation}");
-            Console.WriteLine("There’s nothing of interest here right now.");
+            Location currentLocation = map.GetLocation(player.CurrentLocation);
+            Console.WriteLine($"Location: {currentLocation.Name}");
+            Console.WriteLine($"Description: {currentLocation.Description}");
+        }
+
+        private void MoveToLocation()
+        {
+            Console.WriteLine("\nWhere would you like to go?");
+            map.ShowAvailableLocations();
+
+            Console.Write("Enter the name of the location: ");
+            string newLocation = Console.ReadLine().ToLower().Replace(" ", "_");
+
+            if (map.GetLocation(newLocation) != null)
+            {
+                player.CurrentLocation = newLocation;
+                Console.WriteLine($"You have moved to {map.GetLocation(newLocation).Name}.");
+            }
+            else
+            {
+                Console.WriteLine("Invalid location. Please try again.");
+            }
         }
     }
 }
-
