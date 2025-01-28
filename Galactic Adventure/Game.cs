@@ -4,6 +4,13 @@ namespace GalacticAdventure
 {
     public class Game
     {
+        private Player player;
+
+        public Game()
+        {
+            player = new Player();
+        }
+
         public void ShowMenu()
         {
             Console.WriteLine("Welcome to the Galactic Adventure!");
@@ -35,7 +42,10 @@ namespace GalacticAdventure
 
         private void StartNewGame()
         {
-            Console.WriteLine("Starting a new game...");
+            Console.Write("Enter your character's name: ");
+            player.Name = Console.ReadLine();
+            Console.WriteLine($"Welcome, {player.Name}! Your adventure begins now.");
+            GameLoop();
         }
 
         private void ShowCredits()
@@ -43,5 +53,42 @@ namespace GalacticAdventure
             Console.WriteLine("Game developed by Emre Filiz.");
             ShowMenu();
         }
+
+        private void GameLoop()
+        {
+            while (true)
+            {
+                Console.WriteLine("\nWhat would you like to do?");
+                Console.WriteLine("1. Look Around");
+                Console.WriteLine("2. Check Inventory");
+                Console.WriteLine("3. Quit");
+
+                Console.Write("Choose an action: ");
+                string action = Console.ReadLine();
+
+                switch (action)
+                {
+                    case "1":
+                        LookAround();
+                        break;
+                    case "2":
+                        player.ShowInventory();
+                        break;
+                    case "3":
+                        Console.WriteLine("Exiting the game...");
+                        return;
+                    default:
+                        Console.WriteLine("Invalid action. Try again.");
+                        break;
+                }
+            }
+        }
+
+        private void LookAround()
+        {
+            Console.WriteLine($"You are currently at: {player.CurrentLocation}");
+            Console.WriteLine("There’s nothing of interest here right now.");
+        }
     }
 }
+
