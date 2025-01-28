@@ -29,7 +29,7 @@ namespace GalacticAdventure
             }
             else
             {
-                Console.WriteLine("Inventory:");
+                Console.WriteLine("Your inventory contains:");
                 foreach (var item in Inventory)
                 {
                     Console.WriteLine($"- {item}");
@@ -38,4 +38,3 @@ namespace GalacticAdventure
         }
     }
 }
-
