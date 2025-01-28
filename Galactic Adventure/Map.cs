@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Galactic_Adventure
 {
-    internal class Class5
+    internal class Map
     {
     }
 }

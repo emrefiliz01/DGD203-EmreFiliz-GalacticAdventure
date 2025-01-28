@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Galactic_Adventure
 {
-    internal class Class4
+    internal class Item
     {
     }
 }
