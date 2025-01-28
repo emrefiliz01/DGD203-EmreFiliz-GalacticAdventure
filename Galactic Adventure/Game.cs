@@ -97,7 +97,42 @@ namespace GalacticAdventure
             Location currentLocation = map.GetLocation(player.CurrentLocation);
             Console.WriteLine($"Location: {currentLocation.Name}");
             Console.WriteLine($"Description: {currentLocation.Description}");
+
+            if (currentLocation.Items.Count > 0)
+            {
+                Console.WriteLine("You see the following items:");
+                foreach (var item in currentLocation.Items)
+                {
+                    Console.WriteLine($"- {item.Name}: {item.Description}");
+                }
+
+                Console.Write("Would you like to pick up an item? (yes/no): ");
+                string choice = Console.ReadLine().ToLower();
+
+                if (choice == "yes")
+                {
+                    Console.Write("Enter the name of the item: ");
+                    string itemName = Console.ReadLine();
+
+                    Item item = currentLocation.GetItem(itemName);
+                    if (item != null)
+                    {
+                        player.AddToInventory(item);
+                        currentLocation.RemoveItem(item);
+                        Console.WriteLine($"You picked up: {item.Name}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("That item is not here.");
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("There's nothing of interest here.");
+            }
         }
+
 
         private void MoveToLocation()
         {

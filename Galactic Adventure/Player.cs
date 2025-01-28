@@ -6,34 +6,33 @@ namespace GalacticAdventure
     public class Player
     {
         public string Name { get; set; }
-        public List<string> Inventory { get; private set; }
         public string CurrentLocation { get; set; }
+        private List<Item> inventory;
 
         public Player()
         {
-            Inventory = new List<string>();
-            CurrentLocation = "Abandoned Space Station";
+            inventory = new List<Item>();
         }
 
-        public void AddToInventory(string item)
+        public void AddToInventory(Item item)
         {
-            Inventory.Add(item);
-            Console.WriteLine($"{item} has been added to your inventory.");
+            inventory.Add(item);
+            Console.WriteLine($"{item.Name} has been added to your inventory.");
         }
 
         public void ShowInventory()
         {
-            if (Inventory.Count == 0)
+            if (inventory.Count > 0)
             {
-                Console.WriteLine("Your inventory is empty.");
+                Console.WriteLine("Your inventory contains:");
+                foreach (var item in inventory)
+                {
+                    Console.WriteLine($"- {item.Name}: {item.Description}");
+                }
             }
             else
             {
-                Console.WriteLine("Your inventory contains:");
-                foreach (var item in Inventory)
-                {
-                    Console.WriteLine($"- {item}");
-                }
+                Console.WriteLine("Your inventory is empty.");
             }
         }
     }
