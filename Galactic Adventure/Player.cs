@@ -33,12 +33,27 @@
             {
                 Console.WriteLine("Your inventory is empty.");
             }
+
+            Console.WriteLine($"You have {keyFragments.Count} Ancient Key Fragments.");
         }
 
-        public void AddKeyFragment(AncientKeyFragment fragment)
+        public bool InventoryContainsItem(string itemName)
         {
-            keyFragments.Add(fragment);
-            Console.WriteLine("You have obtained an Ancient Key Fragment!");
+            return inventory.Exists(item => item.Name.Equals(itemName, StringComparison.OrdinalIgnoreCase));
+        }
+
+        public void RemoveItemFromInventory(string itemName)
+        {
+            Item itemToRemove = inventory.Find(item => item.Name.Equals(itemName, StringComparison.OrdinalIgnoreCase));
+            if (itemToRemove != null)
+            {
+                inventory.Remove(itemToRemove);
+                Console.WriteLine($"{itemName} has been removed from your inventory.");
+            }
+            else
+            {
+                Console.WriteLine($"You don't have a {itemName} in your inventory.");
+            }
         }
 
         public bool HasFullKey()
@@ -46,23 +61,10 @@
             return keyFragments.Count >= 3;
         }
 
-        public bool InventoryContainsItem(string itemName)
+        public void AddKeyFragment(AncientKeyFragment fragment)
         {
-            return inventory.Any(item => item.Name.Equals(itemName, StringComparison.OrdinalIgnoreCase));
-        }
-
-        public void RemoveItemFromInventory(string itemName)
-        {
-            var item = inventory.FirstOrDefault(i => i.Name.Equals(itemName, StringComparison.OrdinalIgnoreCase));
-            if (item != null)
-            {
-                inventory.Remove(item);
-                Console.WriteLine($"{item.Name} has been removed from your inventory.");
-            }
-            else
-            {
-                Console.WriteLine("Item not found in inventory.");
-            }
+            keyFragments.Add(fragment);
+            Console.WriteLine("You have received an Ancient Key Fragment.");
         }
     }
 }

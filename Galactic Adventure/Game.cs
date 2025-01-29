@@ -103,8 +103,30 @@
         private void TalkToNpc()
         {
             Location currentLocation = map.GetLocation(player.CurrentLocation);
-            currentLocation.TalkToNpc();
+
+            if (currentLocation.Npc != null)
+            {
+                currentLocation.TalkToNpc();
+
+                Console.WriteLine("Would you like to trade with the NPC? (yes/no): ");
+                string tradeChoice = Console.ReadLine().ToLower();
+
+                if (tradeChoice == "yes")
+                {
+                    currentLocation.Npc.Trade(player);
+                }
+                else
+                {
+                    Console.WriteLine("You decided not to trade.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("There's no one to talk to here.");
+            }
         }
+
+
 
         private void LookAround()
         {

@@ -23,15 +23,22 @@
         public void Trade(Player player)
         {
             Console.WriteLine("What would you like to trade?");
+
             if (player.InventoryContainsItem("Ancient Artifact"))
             {
                 Console.WriteLine("You can trade the Ancient Artifact for an Ancient Key Fragment.");
                 Console.Write("Do you want to trade? (yes/no): ");
                 string choice = Console.ReadLine().ToLower();
+
                 if (choice == "yes")
                 {
                     player.AddKeyFragment(new AncientKeyFragment());
                     player.RemoveItemFromInventory("Ancient Artifact");
+                    Console.WriteLine("Trade successful! You received an Ancient Key Fragment.");
+                }
+                else
+                {
+                    Console.WriteLine("You chose not to trade.");
                 }
             }
             else
@@ -39,6 +46,7 @@
                 Console.WriteLine("You don't have anything to trade.");
             }
         }
+
 
     }
 }
