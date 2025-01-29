@@ -59,6 +59,40 @@
         {
             while (true)
             {
+                if (player.HasFullKey())
+                {
+                    Console.WriteLine("You have gathered all the Ancient Key Fragments! The Ancient Temple is now unlocked!");
+                    player.CurrentLocation = "ancient_temple";
+                    Console.WriteLine("You are now standing in the Ancient Temple, where the Ultimate Power Stone awaits.");
+                    player.AddToInventory(new Item("Ultimate Power Stone", "The most powerful artifact in the galaxy."));
+
+                    Console.WriteLine("Do you choose to be the Savior or the Destroyer of worlds?");
+                    Console.WriteLine("1. Savior");
+                    Console.WriteLine("2. Destroyer");
+
+                    string choice = Console.ReadLine();
+                    if (choice == "1")
+                    {
+                        Console.WriteLine("You activate the Ultimate Power Stone. A brilliant light fills the temple, and the galaxy is saved.");
+                        Console.WriteLine("Planets and civilizations unite, and peace is restored.");
+                        Console.WriteLine("You are now a legend, known as the one who brought balance to the galaxy.");
+
+                        Console.WriteLine("Dr. Orion: 'You did it... You've saved us all. The galaxy will remember you forever.'");
+                        Console.WriteLine("Zylox: 'A new era begins. I have seen many things, but never something as powerful as this.'");
+                    }
+                    else if (choice == "2")
+                    {
+                        Console.WriteLine("You activate the Ultimate Power Stone. A wave of destruction spreads across the galaxy.");
+                        Console.WriteLine("Civilizations crumble, and the galaxy is plunged into chaos.");
+                        Console.WriteLine("You walk away from the temple, knowing that your decision has forever altered the course of history.");
+
+                        Console.WriteLine("Dr. Orion: 'You... You’ve doomed us all. But perhaps, this is the only way to end the cycle of corruption.'");
+                        Console.WriteLine("Zylox: 'The galaxy will never be the same. What have you done?'");
+                    }
+
+                    break;
+                }
+
                 Console.WriteLine("\nWhat would you like to do?");
                 Console.WriteLine("1. Look Around");
                 Console.WriteLine("2. Check Inventory");
@@ -90,15 +124,9 @@
                         Console.WriteLine("Invalid action. Try again.");
                         break;
                 }
-
-                if (player.HasFullKey())
-                {
-                    Console.WriteLine("Congratulations! You have collected all the Ancient Key Fragments.");
-                    Console.WriteLine("The Ancient Temple is now unlocked!");
-                    break;
-                }
             }
         }
+
 
         private void TalkToNpc()
         {
