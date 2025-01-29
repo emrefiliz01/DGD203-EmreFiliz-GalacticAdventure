@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace GalacticAdventure
+﻿namespace GalacticAdventure
 {
     public class Game
     {
@@ -92,6 +90,13 @@ namespace GalacticAdventure
                         Console.WriteLine("Invalid action. Try again.");
                         break;
                 }
+
+                if (player.HasFullKey())
+                {
+                    Console.WriteLine("Congratulations! You have collected all the Ancient Key Fragments.");
+                    Console.WriteLine("The Ancient Temple is now unlocked!");
+                    break;
+                }
             }
         }
 
@@ -160,5 +165,6 @@ namespace GalacticAdventure
                 Console.WriteLine("You can't travel there directly. Try again.");
             }
         }
+
     }
 }

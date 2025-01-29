@@ -1,4 +1,4 @@
-﻿using Galactic_Adventure;
+﻿using GalacticAdventure;
 using System;
 
 namespace GalacticAdventure
