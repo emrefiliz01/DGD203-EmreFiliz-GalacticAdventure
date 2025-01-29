@@ -6,6 +6,7 @@ namespace GalacticAdventure
     public class Map
     {
         private Dictionary<string, Location> locations;
+        private Dictionary<string, List<string>> connections;
 
         public Map()
         {
@@ -16,10 +17,16 @@ namespace GalacticAdventure
                 { "frozen_moon_base", new Location("Frozen Moon Base", "An old base covered in ice and snow.") }
             };
 
-            // Adding items to locations
-            locations["abandoned_space_station"].AddItem(new Item("Keycard", "A keycard used to access restricted areas."));
-            locations["alien_planet"].AddItem(new Item("Alien Artifact", "A strange object radiating a faint glow."));
-            locations["frozen_moon_base"].AddItem(new Item("Thermal Suit", "A suit designed to withstand extreme cold."));
+            connections = new Dictionary<string, List<string>>
+            {
+                { "abandoned_space_station", new List<string> { "alien_planet", "frozen_moon_base" } },
+                { "alien_planet", new List<string> { "abandoned_space_station" } },
+                { "frozen_moon_base", new List<string> { "abandoned_space_station" } }
+            };
+        }
+        public bool IsConnected(string currentLocation, string newLocation)
+        {
+            return connections.ContainsKey(currentLocation) && connections[currentLocation].Contains(newLocation);
         }
 
         public Location GetLocation(string locationKey)
@@ -28,11 +35,19 @@ namespace GalacticAdventure
             return location;
         }
 
-        public void ShowAvailableLocations()
+        public void ShowAvailableLocations(string currentLocation)
         {
-            foreach (var location in locations)
+            if (connections.TryGetValue(currentLocation, out List<string> availableLocations))
             {
-                Console.WriteLine($"- {location.Value.Name}");
+                Console.WriteLine("Available locations:");
+                foreach (var loc in availableLocations)
+                {
+                    Console.WriteLine($"- {locations[loc].Name}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("There are no available locations to move to.");
             }
         }
     }

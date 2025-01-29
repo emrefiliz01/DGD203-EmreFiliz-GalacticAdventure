@@ -61,11 +61,10 @@ namespace GalacticAdventure
         {
             while (true)
             {
-                Console.WriteLine($"\nYou are currently at: {map.GetLocation(player.CurrentLocation).Name}");
-                Console.WriteLine("What would you like to do?");
+                Console.WriteLine("\nWhat would you like to do?");
                 Console.WriteLine("1. Look Around");
                 Console.WriteLine("2. Check Inventory");
-                Console.WriteLine("3. Move to a New Location");
+                Console.WriteLine("3. Move to Another Location");
                 Console.WriteLine("4. Quit");
 
                 Console.Write("Choose an action: ");
@@ -80,7 +79,7 @@ namespace GalacticAdventure
                         player.ShowInventory();
                         break;
                     case "3":
-                        MoveToLocation();
+                        MovePlayer();
                         break;
                     case "4":
                         Console.WriteLine("Exiting the game...");
@@ -91,6 +90,7 @@ namespace GalacticAdventure
                 }
             }
         }
+
 
         private void LookAround()
         {
@@ -133,24 +133,26 @@ namespace GalacticAdventure
             }
         }
 
-
-        private void MoveToLocation()
+        private void MovePlayer()
         {
-            Console.WriteLine("\nWhere would you like to go?");
-            map.ShowAvailableLocations();
+            Console.WriteLine("Where would you like to go?");
+            map.ShowAvailableLocations(player.CurrentLocation);
 
-            Console.Write("Enter the name of the location: ");
+            Console.Write("Enter the location name: ");
             string newLocation = Console.ReadLine().ToLower().Replace(" ", "_");
 
-            if (map.GetLocation(newLocation) != null)
+            if (map.IsConnected(player.CurrentLocation, newLocation))
             {
                 player.CurrentLocation = newLocation;
                 Console.WriteLine($"You have moved to {map.GetLocation(newLocation).Name}.");
             }
             else
             {
-                Console.WriteLine("Invalid location. Please try again.");
+                Console.WriteLine("You can't travel there directly. Try again.");
             }
         }
+
+
+
     }
 }
