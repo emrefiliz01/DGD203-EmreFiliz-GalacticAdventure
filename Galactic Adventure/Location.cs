@@ -1,18 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace GalacticAdventure
 {
     public class Location
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public List<Item> Items { get; set; }
+        public string Name { get; private set; }
+        public string Description { get; private set; }
+        public List<Item> Items { get; private set; }
+        public NPC Npc { get; private set; }
 
-        public Location(string name, string description)
+        public Location(string name, string description, NPC npc = null)
         {
             Name = name;
             Description = description;
             Items = new List<Item>();
+            Npc = npc;
         }
 
         public void AddItem(Item item)
@@ -20,14 +23,26 @@ namespace GalacticAdventure
             Items.Add(item);
         }
 
-        public Item GetItem(string itemName)
-        {
-            return Items.Find(item => item.Name.ToLower() == itemName.ToLower());
-        }
-
         public void RemoveItem(Item item)
         {
             Items.Remove(item);
+        }
+
+        public Item GetItem(string itemName)
+        {
+            return Items.Find(item => item.Name.Equals(itemName, StringComparison.OrdinalIgnoreCase));
+        }
+
+        public void TalkToNpc()
+        {
+            if (Npc != null)
+            {
+                Npc.Talk();
+            }
+            else
+            {
+                Console.WriteLine("There's no one to talk to here.");
+            }
         }
     }
 }

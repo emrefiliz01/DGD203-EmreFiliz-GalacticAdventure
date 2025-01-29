@@ -65,7 +65,8 @@ namespace GalacticAdventure
                 Console.WriteLine("1. Look Around");
                 Console.WriteLine("2. Check Inventory");
                 Console.WriteLine("3. Move to Another Location");
-                Console.WriteLine("4. Quit");
+                Console.WriteLine("4. Talk to NPC");
+                Console.WriteLine("5. Quit");
 
                 Console.Write("Choose an action: ");
                 string action = Console.ReadLine();
@@ -82,6 +83,9 @@ namespace GalacticAdventure
                         MovePlayer();
                         break;
                     case "4":
+                        TalkToNpc();
+                        break;
+                    case "5":
                         Console.WriteLine("Exiting the game...");
                         return;
                     default:
@@ -91,6 +95,11 @@ namespace GalacticAdventure
             }
         }
 
+        private void TalkToNpc()
+        {
+            Location currentLocation = map.GetLocation(player.CurrentLocation);
+            currentLocation.TalkToNpc();
+        }
 
         private void LookAround()
         {
@@ -151,8 +160,5 @@ namespace GalacticAdventure
                 Console.WriteLine("You can't travel there directly. Try again.");
             }
         }
-
-
-
     }
 }

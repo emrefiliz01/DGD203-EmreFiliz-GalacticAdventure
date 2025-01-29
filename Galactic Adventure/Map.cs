@@ -10,12 +10,28 @@ namespace GalacticAdventure
 
         public Map()
         {
+            NPC scientist = new NPC("Dr. Orion", new List<string>
+            {
+                "Greetings, traveler! I have been studying the ancient artifacts here.",
+                "If you find anything unusual, bring it to me."
+            });
+
+            NPC alienMerchant = new NPC("Zylox", new List<string>
+            {
+                "Welcome, human! I trade rare items from across the galaxy.",
+                "Do you have anything valuable to sell?"
+            });
+
             locations = new Dictionary<string, Location>
             {
-                { "abandoned_space_station", new Location("Abandoned Space Station", "A deserted station floating in space.") },
-                { "alien_planet", new Location("Alien Planet", "A mysterious planet filled with unknown life forms.") },
+                { "abandoned_space_station", new Location("Abandoned Space Station", "A deserted station floating in space.", scientist) },
+                { "alien_planet", new Location("Alien Planet", "A mysterious planet filled with unknown life forms.", alienMerchant) },
                 { "frozen_moon_base", new Location("Frozen Moon Base", "An old base covered in ice and snow.") }
             };
+
+            locations["abandoned_space_station"].AddItem(new Item("Ancient Artifact", "A mysterious artifact with unknown origins."));
+            locations["alien_planet"].AddItem(new Item("Alien Crystal", "A rare crystal that glows in the dark."));
+            locations["frozen_moon_base"].AddItem(new Item("Frozen Key", "A key made of ice that never melts."));
 
             connections = new Dictionary<string, List<string>>
             {
@@ -23,10 +39,6 @@ namespace GalacticAdventure
                 { "alien_planet", new List<string> { "abandoned_space_station" } },
                 { "frozen_moon_base", new List<string> { "abandoned_space_station" } }
             };
-        }
-        public bool IsConnected(string currentLocation, string newLocation)
-        {
-            return connections.ContainsKey(currentLocation) && connections[currentLocation].Contains(newLocation);
         }
 
         public Location GetLocation(string locationKey)
@@ -49,6 +61,15 @@ namespace GalacticAdventure
             {
                 Console.WriteLine("There are no available locations to move to.");
             }
+        }
+
+        public bool IsConnected(string currentLocation, string newLocation)
+        {
+            if (connections.TryGetValue(currentLocation, out List<string> availableLocations))
+            {
+                return availableLocations.Contains(newLocation);
+            }
+            return false;
         }
     }
 }
